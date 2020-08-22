@@ -10,7 +10,53 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
     
+    
+    // MARK: - PRIVATE
+    
+    // MARK: Properties - Private
+    
+    private let calculator = Calculator()
+    
+    // MARK: IBOutlets
+    
     @IBOutlet private weak var operationTextView: UITextView!
+    
+    
+    // MARK: IBActions
+    
+    @IBAction private func tappedNumberButton(_ sender: UIButton) {
+       addDigit(sender.tag)
+    }
+    
+    @IBAction private func tappedOnMathOperator(_ sender: UIButton) {
+        let mathOperator = MathOperator.allCases[sender.tag]
+        addMathOperator(mathOperator)
+    }
+    
+    @IBAction private func tappedEqualButton(_ sender: UIButton) {
+        resolveOperation()
+    }
+    
+    
+    @IBAction private func didTapOnResetButton(_ sender: UIButton) {
+        textToCompute.removeAll()
+    }
+    
+    private func presentSimpleAlert(message: String) {
+        let alertVC = UIAlertController(
+            title: "Zéro!",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction =  UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alertVC.addAction(confirmAction)
+        
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    
     
     
     private var textToCompute = "" {
@@ -24,7 +70,7 @@ class CalculatorViewController: UIViewController {
         return textToCompute.split(separator: " ").map { "\($0)" }
     }
     
-    private let calculator = Calculator()
+
    
     
     // Error check computed variables
@@ -50,44 +96,32 @@ class CalculatorViewController: UIViewController {
         return textToCompute.firstIndex(of: "=") != nil
     }
     
-    // View actions
-    @IBAction private func tappedNumberButton(_ sender: UIButton) {
-        
+
+    
+    private func addDigit(_ digit: Int) {
         if expressionHaveResult {
             textToCompute.removeAll()
         }
         
-        textToCompute.append(sender.tag.description)
+        textToCompute.append(digit.description)
     }
     
     
-    @IBAction private func tappedOnMathOperator(_ sender: UIButton) {
-        
+    
+    
+    private func addMathOperator(_ mathOperator: MathOperator) {
         guard canAddOperator else {
             presentSimpleAlert(message: "Un operateur est déja mis !")
             return
         }
         
-        let mathOperator = MathOperator.allCases[sender.tag]
         textToCompute.append(" \(mathOperator.symbol) ")
     }
     
-    private func presentSimpleAlert(message: String) {
-        let alertVC = UIAlertController(
-            title: "Zéro!",
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        let confirmAction =  UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        
-        alertVC.addAction(confirmAction)
-        
-        present(alertVC, animated: true, completion: nil)
-    }
+   
     
     
-    @IBAction private func tappedEqualButton(_ sender: UIButton) {
+    private func resolveOperation() {
         guard expressionIsCorrect else {
             presentSimpleAlert(message: "Entrez une expression correcte !")
             return
@@ -124,9 +158,6 @@ class CalculatorViewController: UIViewController {
     }
     
     
-    @IBAction private func didTapOnResetButton(_ sender: UIButton) {
-        textToCompute.removeAll()
-    }
 }
 
 extension CalculatorViewController: CalculatorDelegate {
