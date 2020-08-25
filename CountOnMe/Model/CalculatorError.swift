@@ -11,13 +11,15 @@ import UIKit
 enum CalculatorError: Error {
     case cannotAddOperatorAfterAnotherOperator
     case cannotDivideByZero
-    case unknownOperator
+    case expressionIsIncorrect
+    case expressionHasNotEnoughElement
     
     var errorMessage: String{
         switch self {
         case .cannotAddOperatorAfterAnotherOperator: return " Un operateur est déja mis !"
         case .cannotDivideByZero: return " Vous ne pouvez pas diviser par zéro ❌ ! "
-        case .unknownOperator: return "Entrez une expression correcte !"
+        case .expressionIsIncorrect: return "Entrez une expression correcte !"
+        case .expressionHasNotEnoughElement: return "L'opération n'a pas assez d'éléments"
             
         }
     }
