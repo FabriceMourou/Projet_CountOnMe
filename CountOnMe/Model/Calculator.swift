@@ -28,15 +28,17 @@ class Calculator {
         if expressionHaveResult {
             textToCompute.removeAll()
         }
+        
+        if elements.last == "0" {
+            textToCompute.removeLast()
+        }
 
         textToCompute.append(digit.description)
     }
-
+    
     func addMathOperator(_ mathOperator: MathOperator) throws {
-        guard canAddOperator else {
-            throw CalculatorError.cannotAddOperatorAfterAnotherOperator
-        }
-
+        try ensureCanAddOperator()
+        
         textToCompute.append(" \(mathOperator.symbol) ")
     }
 
@@ -108,8 +110,14 @@ class Calculator {
         return elements.count >= 3
     }
     
-    private var canAddOperator: Bool {
-        return !isLastElementMathOperator
+    private func ensureCanAddOperator() throws {
+        guard !isLastElementMathOperator else {
+            throw CalculatorError.cannotAddOperatorAfterAnotherOperator
+        }
+        
+        guard !textToCompute.isEmpty else {
+            throw CalculatorError.cannotAddOperatorIfOperationEmpty
+        }
     }
     
     private var isLastElementMathOperator: Bool {
