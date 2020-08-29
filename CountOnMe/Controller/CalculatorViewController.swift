@@ -6,9 +6,28 @@
 //  Copyright © 2019 Vincent Saluzzo. All rights reserved.
 //
 
+/*
+ 1. Créer un protocol portant le nom du modèle+delegate (Model = Calculator => CalculatorDelegate)
+ 2. Indiquer que le protocol peut s'appliquer seulement sur des classes => Une classe peut se conformer au protcole mais pas une struct/enum => : class
+ 3. Indiquer dans le protocol les fonctions quim représente les évéenements sur lesquelle la classe qui s'y conforme peut réagir => utilisatiojn du mot clef did has + participe passé etc.
+ 4. L'objet qui souhaite répondre ou réagir à ses events doit s'y confo conformant il faut respecter le contrat
+ 5. Le modèle (calculator) doit maintenant possédé une référence (une propriété) qui est du type delegate optionnel + ajout du mot weak pour éviter les retain cycle (gestion mémoire)
+ 6. appeler les fonctions du delegate au bon endroit dans le modèle
+ 7. l'objet qui souhaite être notifié dois assigné sa référence au delefate du modèle => se fait en l'occurence dans le view did load (calculator.delegate = self)
+ */
+
 import UIKit
 
 class CalculatorViewController: UIViewController {
+    
+    // MARK: - INTERNAL
+    
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        calculator.delegate = self
+    }
     
     
     // MARK: - PRIVATE
@@ -24,22 +43,36 @@ class CalculatorViewController: UIViewController {
     
     // MARK: IBActions
     
-    @IBAction private func tappedNumberButton(_ sender: UIButton) {
-       addDigit(sender.tag)
+    @IBAction private func didTapDigitButton(_ sender: UIButton) {
+        calculator.addDigit(sender.tag)
     }
     
-    @IBAction private func tappedOnMathOperator(_ sender: UIButton) {
+    @IBAction private func didTapOnMathOperator(_ sender: UIButton) {
         let mathOperator = MathOperator.allCases[sender.tag]
-        addMathOperator(mathOperator)
+        do {
+            try calculator.addMathOperator(mathOperator)
+        } catch {
+            handleError(error: error)
+        }
     }
     
-    @IBAction private func tappedEqualButton(_ sender: UIButton) {
-        resolveOperation()
+    @IBAction private func didTapEqualButton() {
+        do {
+            try calculator.resolveOperation()
+        } catch {
+            handleError(error: error)
+        }
     }
     
     
-    @IBAction private func didTapOnResetButton(_ sender: UIButton) {
-        textToCompute.removeAll()
+    @IBAction private func didTapOnResetButton() {
+        calculator.resetOperation()
+    }
+    
+    
+    private func handleError(error: Error) {
+        guard let calculatorError = error as? CalculatorError else { return }
+        presentSimpleAlert(message: calculatorError.errorMessage)
     }
     
     private func presentSimpleAlert(message: String) {
@@ -55,116 +88,16 @@ class CalculatorViewController: UIViewController {
         
         present(alertVC, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    private var textToCompute = "" {
-        didSet {
-            operationTextView.text = textToCompute
-        }
-    }
-    
-    
-    private var elements: [String] {
-        return textToCompute.split(separator: " ").map { "\($0)" }
-    }
-    
-
-   
-    
-    // Error check computed variables
-    private var expressionIsCorrect: Bool {
-        return !isLastElementMathOperator
-    }
-    
-    private var expressionHaveEnoughElement: Bool {
-        return elements.count >= 3
-    }
-    
-    private var canAddOperator: Bool {
-        return !isLastElementMathOperator
-    }
-    
-    private var isLastElementMathOperator: Bool {
-        MathOperator.allCases.contains {
-            $0.symbol == elements.last
-        }
-    }
-    
-    private var expressionHaveResult: Bool {
-        return textToCompute.firstIndex(of: "=") != nil
-    }
-    
 
     
-    private func addDigit(_ digit: Int) {
-        if expressionHaveResult {
-            textToCompute.removeAll()
-        }
-        
-        textToCompute.append(digit.description)
-    }
-    
-    
-    
-    
-    private func addMathOperator(_ mathOperator: MathOperator) {
-        guard canAddOperator else {
-            presentSimpleAlert(message: "Un operateur est déja mis !")
-            return
-        }
-        
-        textToCompute.append(" \(mathOperator.symbol) ")
-    }
-    
-   
-    
-    
-    private func resolveOperation() {
-        guard expressionIsCorrect else {
-            presentSimpleAlert(message: "Entrez une expression correcte !")
-            return
-        }
-        
-        guard expressionHaveEnoughElement else {
-            presentSimpleAlert(message: "Démarrez un nouveau calcul !")
-            return
-        }
-        
-        // Create local copy of operations
-        var operationsToReduce = elements
-        
-        // Iterate over operations while an operand still here
-        while operationsToReduce.count > 1 {
-            let left = Int(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Int(operationsToReduce[2])!
-            
-            let result: Int
-            switch operand {
-            case "+": result = left + right
-            case "-": result = left - right
-            case "×": result = left * right
-            case "÷": result = left / right
-            default: fatalError("Unknown operator !")
-            }
-            
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
-        }
-        
-        textToCompute.append(" = \(operationsToReduce.first!)")
-    }
     
     
 }
 
 extension CalculatorViewController: CalculatorDelegate {
     func didUpdateOperationString(textToCompute: String) {
-        
+        operationTextView.text = textToCompute
     }
-    
     
 }
 
