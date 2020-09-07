@@ -6,26 +6,18 @@
 //  Copyright © 2019 Vincent Saluzzo. All rights reserved.
 //
 
-
-
 import UIKit
 
 class CalculatorViewController: UIViewController {
     
     // MARK: - INTERNAL
-    
     // MARK: Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         calculator.delegate = self
     }
-    
-    
     // MARK: - PRIVATE
-    
     // MARK: Properties - Private
-    
     private let calculator = Calculator()
     
     // MARK: IBOutlets
@@ -69,7 +61,7 @@ class CalculatorViewController: UIViewController {
     
     private func presentSimpleAlert(message: String) {
         let alertVC = UIAlertController(
-            title: "Zéro!",
+            title: "🤷🏻‍♂️",
             message: message,
             preferredStyle: .alert
         )

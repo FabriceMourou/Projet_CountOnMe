@@ -18,10 +18,10 @@ enum CalculatorError: Error {
     var errorMessage: String{
         switch self {
         case .cannotAddOperatorAfterAnotherOperator: return " Un operateur est déja mis !"
-        case .cannotDivideByZero: return " Vous ne pouvez pas diviser par zéro ❌ ! "
+        case .cannotDivideByZero: return " ❌ Vous ne pouvez pas diviser par zéro  ! "
         case .expressionIsIncorrect: return "Entrez une expression correcte !"
         case .expressionHasNotEnoughElement: return "L'opération n'a pas assez d'éléments"
-        case .cannotAddOperatorIfOperationEmpty: return "cannotAddOperatorIfOperationEmpty"
+        case .cannotAddOperatorIfOperationEmpty: return "Vous ne pouvez pas commencer par un opérateur 🔢 !"
         }
     }
 }
