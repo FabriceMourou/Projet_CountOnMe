@@ -8,18 +8,16 @@
 
 import UIKit
 
-
 enum MathOperator: CaseIterable {
     case plus, minus, multiply, divide
-   
-    
-    var symbol: String{
+
+    var symbol: String {
         switch self {
         case .plus: return "+"
         case .minus: return "-"
         case .multiply: return "×"
         case .divide: return "÷"
-        
+
         }
     }
 }
