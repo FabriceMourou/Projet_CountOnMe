@@ -162,7 +162,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.divide)
         calculator.addDigit(3)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 2 ÷ 3 = 2.66666")
+        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 2 ÷ 3 = 2.66667")
     }
 
     func testAddMathOperator_WhenAddMathOperatorFirst_ThenDisplayAnError() {
@@ -245,6 +245,14 @@ class CalculatorTestCases: XCTestCase {
          }
 
      }
+    
+    func testResolveOperation_WhenAddMultipleDigitsAndMathOperatorMultiply_ThenAppendMultipleDigitsAndMathOperatorsAndExponentResult() {
+        calculator.addDigit(100000000)
+        try! calculator.addMathOperator(.multiply)
+        calculator.addDigit(100000000)
+        try! calculator.resolveOperation()
+        XCTAssertEqual(calculatorDelegateMock.textToCompute, "100000000 × 100000000 = 1e16")
+    }
 
     // MARK: - resetOperation
 
