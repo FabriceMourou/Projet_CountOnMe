@@ -17,7 +17,33 @@ enum MathOperator: CaseIterable {
         case .minus: return "-"
         case .multiply: return "×"
         case .divide: return "÷"
-
         }
     }
+    
+    var isPriorityOperator: Bool {
+        switch self {
+        case .plus, .minus: return false
+        case .multiply, .divide: return true
+        }
+    }
+    
+    var associatedOperation: (Double, Double) -> Double {
+        switch self {
+        case .plus: return { $0 + $1 }
+        case .minus: return { $0 - $1 }
+        case .multiply: return { $0 * $1 }
+        case .divide: return { $0 / $1 }
+        }
+    }
+    
+    static func convertSymbolToMathOperator(symbol: String) -> MathOperator? {
+        switch symbol {
+        case "+": return .plus
+        case "-": return .minus
+        case "×": return .multiply
+        case "÷": return .divide
+        default: return nil
+        }
+    }
+
 }

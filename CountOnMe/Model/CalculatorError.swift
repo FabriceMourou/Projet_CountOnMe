@@ -14,6 +14,11 @@ enum CalculatorError: Error {
     case expressionIsIncorrect
     case expressionHasNotEnoughElement
     case cannotAddOperatorIfOperationEmpty
+    case cannotFormatInvalidStringNumber
+    case failedToFormatFinalResult
+    case cannotGetLeftAndRightNumberForOperationUnit
+    case cannotConvertSymbolIntoMathOperator
+    case cannotGetFinalResult
 
     var errorMessage: String {
         switch self {
@@ -22,6 +27,11 @@ enum CalculatorError: Error {
         case .expressionIsIncorrect: return "Entrez une expression correcte ⛔️ !"
         case .expressionHasNotEnoughElement: return "L'opération n'a pas assez d'éléments 🛠 !"
         case .cannotAddOperatorIfOperationEmpty: return "Vous ne pouvez pas commencer par un opérateur 🔢 !"
+        case .cannotFormatInvalidStringNumber: return "cannotFormatInvalidStringNumber"
+        case .failedToFormatFinalResult: return "failedToFormatFinalResult"
+        case .cannotGetLeftAndRightNumberForOperationUnit: return "cannotGetLeftAndRightNumberForOperationUnit"
+        case .cannotConvertSymbolIntoMathOperator: return "cannotConvertSymbolIntoMathOperator"
+        case .cannotGetFinalResult: return "cannotGetFinalResult"
         }
     }
 }

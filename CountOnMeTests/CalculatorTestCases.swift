@@ -9,6 +9,8 @@
 import XCTest
 @testable import CountOnMe
 
+//swiftlint:disable line_length
+
 class CalculatorTestCases: XCTestCase {
 
     var calculator: Calculator!
@@ -251,7 +253,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(100000000)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "100000000 × 100000000 = 1e16")
+        XCTAssertEqual(calculatorDelegateMock.textToCompute, "100000000 × 100000000 = 1e+16")
     }
 
     // MARK: - resetOperation

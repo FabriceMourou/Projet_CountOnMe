@@ -1,16 +1,7 @@
-//
-//  .swiftlint.yml
-//  CountOnMe
-//
-//  Created by Fabrice Mourou on 08/09/2020.
-//  Copyright © 2020 Vincent Saluzzo. All rights reserved.
-//
-
-import Foundation
-
-
 disabled_rules: # rule identifiers to exclude from running
 - force_try
 - force_cast
 - force_unwrappingitespace
 - type_name
+- trailing_whitespace
+- identifier_name
