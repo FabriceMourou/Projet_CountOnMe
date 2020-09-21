@@ -79,27 +79,8 @@ class Calculator {
         return textToCompute.firstIndex(of: "=") != nil
     }
     
-//    ["3", "+" "5", "-", "2"]
-    
+
     // MARK: Methods - Private
-    
-//    private func getIsPrioritiesRemainingFor(in operationsToReduce: [String]) -> Bool {
-//
-//        var hasFoundAtLeastOnePriorityOperator = false
-//
-//        for element in operationsToReduce {
-//            guard let mathOperator = MathOperator.convertSymbolToMathOperator(symbol: element) else {
-//                continue
-//            }
-//
-//            if  mathOperator.isPriorityOperator {
-//                hasFoundAtLeastOnePriorityOperator = true
-//                break
-//            }
-//        }
-//
-//        return hasFoundAtLeastOnePriorityOperator
-//    }
     
     private func getIsPrioritiesRemaining(in operationsToReduce: [String]) -> Bool {
         
