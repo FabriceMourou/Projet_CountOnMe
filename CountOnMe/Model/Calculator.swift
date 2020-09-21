@@ -12,8 +12,23 @@ protocol CalculatorDelegate: class {
     func didUpdateOperationString(textToCompute: String)
 }
 
+
+
+
 class Calculator {
     // MARK: - INTERNAL
+    
+    // MARK: - Inits
+    
+    init(
+        operationResolver: OperationResolver = OperationResolver(),
+        calculatorNumberFormatter: CalculatorNumberFormatter = CalculatorNumberFormatter()
+    ) {
+        self.operationResolver = operationResolver
+        self.calculatorNumberFormatter = calculatorNumberFormatter
+    }
+
+    
     // MARK: Properties - Internal
     weak var delegate: CalculatorDelegate?
     // MARK: Methods - Internal
@@ -38,8 +53,8 @@ class Calculator {
     
     func resolveOperation() throws {
         try ensureOperationIsCorrect()
-        let result = try getResult()
-        let formattedResult = try formatResult(result)
+        let result = try operationResolver.getResult(elements: elements)
+        let formattedResult = try calculatorNumberFormatter.formatResult(result)
         addResultToOperationString(result: formattedResult)
     }
     
@@ -50,6 +65,11 @@ class Calculator {
     // MARK: - PRIVATE
     
     // MARK: Properties - Private
+    
+    private let operationResolver: OperationResolver
+    private let calculatorNumberFormatter: CalculatorNumberFormatter
+    
+
     
     private var textToCompute: String = "" {
         didSet {
@@ -82,17 +102,6 @@ class Calculator {
 
     // MARK: Methods - Private
     
-    private func getIsPrioritiesRemaining(in operationsToReduce: [String]) -> Bool {
-        
-        return operationsToReduce.contains {
-            guard let mathOperator = MathOperator.convertSymbolToMathOperator(symbol: $0) else {
-                return false
-            }
-            
-            return mathOperator.isPriorityOperator
-        }
-    }
-    
     private func ensureCanAddOperator() throws {
         guard !isLastElementMathOperator else {
             throw CalculatorError.cannotAddOperatorAfterAnotherOperator
@@ -118,56 +127,15 @@ class Calculator {
          textToCompute.append(" = \(result)")
     }
     
-    private func getResult() throws -> String {
-        
-        var operationsToReduce = elements
-        var operationUnitIndex = 0
-        
-        while operationsToReduce.count > 1 {
-            
-            guard
-                let left = Double(operationsToReduce[operationUnitIndex]),
-                let right = Double(operationsToReduce[operationUnitIndex + 2])
-                else {
-                    throw CalculatorError.cannotGetLeftAndRightNumberForOperationUnit
-            }
-            
-            let mathOperatorSymbolString = operationsToReduce[operationUnitIndex + 1]
-            
-            guard let mathOperator = MathOperator.convertSymbolToMathOperator(symbol: mathOperatorSymbolString) else {
-                throw CalculatorError.cannotConvertSymbolIntoMathOperator
-            }
-            
-            let isPriorityOperatorRemaining = getIsPrioritiesRemaining(in: operationsToReduce)
-            
-            if isPriorityOperatorRemaining && !mathOperator.isPriorityOperator {
-                operationUnitIndex += 2
-                continue
-            }
-            
-            let isDividingByZero = mathOperator == .divide && right == 0
-            
-            guard !isDividingByZero else {
-                throw CalculatorError.cannotDivideByZero
-            }
-            
-            let result = mathOperator.associatedOperation(left, right)
-            
-            operationsToReduce.removeSubrange(operationUnitIndex...operationUnitIndex + 2)
-            
-            operationsToReduce.insert("\(result)", at: operationUnitIndex)
-            
-            operationUnitIndex = 0
-        }
-        
-        guard let finalResult = operationsToReduce.first else {
-            throw CalculatorError.cannotGetLeftAndRightNumberForOperationUnit
-        }
-        
-        return finalResult
-    }
     
-    private func formatResult(_ result: String) throws -> String {
+    
+    
+    
+}
+
+
+class CalculatorNumberFormatter {
+    func formatResult(_ result: String) throws -> String {
         guard let resultAsDouble = Double(result) else {
             throw CalculatorError.cannotFormatInvalidStringNumber
         }
@@ -193,5 +161,4 @@ class Calculator {
         
         return formattedResult
     }
-    
 }

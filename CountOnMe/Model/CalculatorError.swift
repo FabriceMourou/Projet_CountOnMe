@@ -18,7 +18,7 @@ enum CalculatorError: Error {
     case failedToFormatFinalResult
     case cannotGetLeftAndRightNumberForOperationUnit
     case cannotConvertSymbolIntoMathOperator
-//    case cannotGetFinalResult
+    case cannotGetFinalResult
 
     var errorMessage: String {
         switch self {
@@ -31,7 +31,7 @@ enum CalculatorError: Error {
         case .failedToFormatFinalResult: return "Le resultat final ne peut pas être afficher ❌ !"
         case .cannotGetLeftAndRightNumberForOperationUnit: return "Impossible d'obtenir les chiffres 🛠 !"
         case .cannotConvertSymbolIntoMathOperator: return "Impossible de convertir le symbole en opérateur mathématique ❌ !"
-//        case .cannotGetFinalResult: return "cannotGetFinalResult"
+        case .cannotGetFinalResult: return "cannotGetFinalResult"
         }
     }
 }

@@ -198,6 +198,76 @@ class CalculatorTestCases: XCTestCase {
         XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 4 × 16 = 256")
     }
     
+    func testAddMathOperator_WhenAddDigitsAndThreeSameMathOperators_ThenAppendResultasdasd() {
+        
+        
+        
+        calculator.addDigit(2)
+        try! calculator.addMathOperator(.divide)
+        calculator.addDigit(0)
+        
+        
+        XCTAssertThrowsError(try calculator.resolveOperation(), "") { (error) in
+            XCTAssertEqual(error as! CalculatorError, CalculatorError.cannotDivideByZero)
+        }
+        
+        
+    }
+
+    func testAddMathOperator_WhenAddDigitsAndThreeSameMathOperators_ThenAppendResultasdasdasdasd() {
+
+        let operationResolver = OperationResolver()
+       
+
+
+        XCTAssertThrowsError(try operationResolver.getResult(elements: ["3", "a", "5"]), "") { (error) in
+            XCTAssertEqual(error as! CalculatorError, CalculatorError.cannotConvertSymbolIntoMathOperator)
+        }
+
+
+    }
+    
+    func testAddMathOperator_WhenAddDigitsAndThreeSameMathOperators_ThenAppendResultasdasdasdasasdd() {
+
+        let operationResolver = OperationResolver()
+       
+
+
+        XCTAssertThrowsError(try operationResolver.getResult(elements: ["a", "+", "5"]), "") { (error) in
+            XCTAssertEqual(error as! CalculatorError, CalculatorError.cannotGetLeftAndRightNumberForOperationUnit)
+        }
+
+
+    }
+    
+    func testAddMathOperator_WhenAddDigitsAndThreeSameMathOperators_ThenAppendResultasdasdasdaasdsasdd() {
+
+        let operationResolver = OperationResolver()
+       
+
+
+        XCTAssertThrowsError(try operationResolver.getResult(elements: []), "") { (error) in
+            XCTAssertEqual(error as! CalculatorError, CalculatorError.cannotGetFinalResult)
+        }
+
+
+    }
+    
+    
+    func testAddMathOperator_WhenAddDigitsAndThreeSameMathOperators_ThenAppendResulasdtasdasdasdaasdsasdd() {
+
+        let calculatorNumberFormatter = CalculatorNumberFormatter()
+       
+
+
+        XCTAssertThrowsError(try calculatorNumberFormatter.formatResult("a"), "") { (error) in
+            XCTAssertEqual(error as! CalculatorError, CalculatorError.cannotFormatInvalidStringNumber)
+        }
+
+
+    }
+    
+    
     func testAddMathOperator_WhenAddDigitsAndThreeMathOperators_ThenAppendResult() {
         calculator.addDigit(2)
         try! calculator.addMathOperator(.multiply)
