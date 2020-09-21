@@ -7,13 +7,22 @@ class OperationResolver {
     
     // MARK: - Inits
     
+    private let calculatorNumberFormatter: CalculatorNumberFormatter = CalculatorNumberFormatter()
+    
     init(mathOperatorConverter: MathOperatorConverter = MathOperatorConverter()) {
         self.mathOperatorConverter = mathOperatorConverter
     }
     
     private let mathOperatorConverter: MathOperatorConverter
     
-    func getResult(elements: [String]) throws -> String {
+    func resolveOperation(elements: [String]) throws -> String {
+        try ensureOperationIsCorrect(elements: elements)
+        let result = try getResult(elements: elements)
+        let formattedResult = try calculatorNumberFormatter.formatResult(result)
+        return formattedResult
+    }
+    
+    private func getResult(elements: [String]) throws -> String {
         
         var operationsToReduce = elements
         var operationUnitIndex = 0
@@ -74,4 +83,33 @@ class OperationResolver {
             return mathOperator.isPriorityOperator
         }
     }
+    
+    private func getIsLastElementMathOperator(elements: [String]) -> Bool {
+        MathOperator.allCases.contains {
+            $0.symbol == elements.last
+        }
+    }
+    
+    private func getExpressionIsCorrect(elements: [String]) -> Bool {
+        return !getIsLastElementMathOperator(elements: elements)
+    }
+    
+    private func getExpressionHaveEnoughElement(elements: [String]) -> Bool {
+        return elements.count >= 3
+    }
+    
+    
+    private func ensureOperationIsCorrect(elements: [String]) throws {
+        guard getExpressionIsCorrect(elements: elements) else {
+            throw CalculatorError.expressionIsIncorrect
+        }
+        
+        guard getExpressionHaveEnoughElement(elements: elements) else {
+            throw CalculatorError.expressionHasNotEnoughElement
+        }
+    
+    }
+    
+   
+    
 }

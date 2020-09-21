@@ -14,6 +14,7 @@ class CalculatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         calculator.delegate = self
+        calculator.setup()
     }
     // MARK: - PRIVATE
     // MARK: Properties - Private
