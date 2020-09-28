@@ -1,12 +1,8 @@
-//
-//  CalculatorError.swift
-//  CountOnMe
-//
-//  Created by Fabrice Mourou on 21/08/2020.
-//  Copyright © 2020 Vincent Saluzzo. All rights reserved.
-//
+import Foundation
 
-import UIKit
+// MARK: - INTERNAL
+
+// MARK: Properties - Internal
 
 enum CalculatorError: Error {
     case cannotAddOperatorAfterAnotherOperator
@@ -19,7 +15,7 @@ enum CalculatorError: Error {
     case cannotGetLeftAndRightNumberForOperationUnit
     case cannotConvertSymbolIntoMathOperator
     case cannotGetFinalResult
-
+    
     var errorMessage: String {
         switch self {
         case .cannotAddOperatorAfterAnotherOperator: return " Un operateur est déja mis 🔢 !"
@@ -30,8 +26,9 @@ enum CalculatorError: Error {
         case .cannotFormatInvalidStringNumber: return "cannotFormatInvalidStringNumber"
         case .failedToFormatFinalResult: return "Le resultat final ne peut pas être afficher ❌ !"
         case .cannotGetLeftAndRightNumberForOperationUnit: return "Impossible d'obtenir les chiffres 🛠 !"
-        case .cannotConvertSymbolIntoMathOperator: return "Impossible de convertir le symbole en opérateur mathématique ❌ !"
-        case .cannotGetFinalResult: return "cannotGetFinalResult"
+        case .cannotConvertSymbolIntoMathOperator:
+            return "Impossible de convertir le symbole en opérateur mathématique ❌ !"
+        case .cannotGetFinalResult: return "Impossible d'obtenir un resultat final 🔢 !"
         }
     }
 }

@@ -1,11 +1,3 @@
-//
-//  Calculator.swift
-//  CountOnMe
-//
-//  Created by Fabrice Mourou on 21/08/2020.
-//  Copyright © 2020 Vincent Saluzzo. All rights reserved.
-//
-
 import Foundation
 
 protocol CalculatorDelegate: class {
@@ -15,19 +7,18 @@ protocol CalculatorDelegate: class {
 
 
 class Calculator {
+    
     // MARK: - INTERNAL
 
-    
-    func setup() {
-        operationMaker.delegate = self
-    }
-
-    
     // MARK: Properties - Internal
     weak var delegate: CalculatorDelegate?
     
     
     // MARK: Methods - Internal
+    
+    func setup() {
+        operationMaker.delegate = self
+    }
     
     func addDigit(_ digit: Int) {
         operationMaker.addDigit(digit)

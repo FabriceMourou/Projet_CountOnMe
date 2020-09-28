@@ -1,12 +1,8 @@
-//
-//  MathOperator.swift
-//  CountOnMe
-//
-//  Created by Fabrice Mourou on 21/08/2020.
-//  Copyright © 2020 Vincent Saluzzo. All rights reserved.
-//
+import Foundation
 
-import UIKit
+// MARK: - INTERNAL
+
+// MARK: Properties - Internal
 
 enum MathOperator: CaseIterable {
     case plus, minus, multiply, divide

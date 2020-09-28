@@ -5,12 +5,20 @@ protocol OperationMakerDelegate: class {
 }
 
 class OperationMaker {
+    
+    // MARK: - INTERNAL
+
+    // MARK: Properties - Internal
+    
+    
     weak var delegate: OperationMakerDelegate?
     
     var elements: [String] {
         return operation.split(separator: " ").map { "\($0)" }
     }
    
+    // MARK: Methods - Internal
+    
     
     func addDigit(_ digit: Int) {
         if expressionHaveResult {
@@ -39,7 +47,9 @@ class OperationMaker {
          operation.append(" = \(result)")
     }
     
+    // MARK: - PRIVATE
     
+    // MARK: Properties - Private
     
     
     private var operation: String = "" {
@@ -59,6 +69,8 @@ class OperationMaker {
             $0.symbol == elements.last
         }
     }
+    
+    // MARK: Methods - Private
     
     private func ensureCanAddOperator() throws {
         guard !isLastElementMathOperator else {

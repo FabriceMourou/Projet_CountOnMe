@@ -3,17 +3,17 @@ import Foundation
 
 class OperationResolver {
     
+    
     // MARK: - INTERNAL
     
     // MARK: - Inits
-    
-    private let calculatorNumberFormatter: CalculatorNumberFormatter = CalculatorNumberFormatter()
     
     init(mathOperatorConverter: MathOperatorConverter = MathOperatorConverter()) {
         self.mathOperatorConverter = mathOperatorConverter
     }
     
-    private let mathOperatorConverter: MathOperatorConverter
+    
+    // MARK: Methods - Internal
     
     func resolveOperation(elements: [String]) throws -> String {
         try ensureOperationIsCorrect(elements: elements)
@@ -21,6 +21,18 @@ class OperationResolver {
         let formattedResult = try calculatorNumberFormatter.formatResult(result)
         return formattedResult
     }
+    
+    
+    // MARK: - PRIVATE
+    
+    // MARK: Properties - Private
+    
+    private let calculatorNumberFormatter: CalculatorNumberFormatter = CalculatorNumberFormatter()
+    
+    private let mathOperatorConverter: MathOperatorConverter
+    
+    
+    // MARK: Methods - Private
     
     private func getResult(elements: [String]) throws -> String {
         
@@ -71,7 +83,7 @@ class OperationResolver {
         return finalResult
     }
     
-    // MARK: Methods - Private
+
     
     private func getIsPrioritiesRemaining(in operationsToReduce: [String]) -> Bool {
         

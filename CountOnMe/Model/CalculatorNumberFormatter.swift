@@ -2,6 +2,11 @@ import Foundation
 
 
 class CalculatorNumberFormatter {
+    
+    // MARK: - INTERNAL
+
+    // MARK: Methods - Internal
+    
     func formatResult(_ result: String) throws -> String {
         guard let resultAsDouble = Double(result) else {
             throw CalculatorError.cannotFormatInvalidStringNumber
