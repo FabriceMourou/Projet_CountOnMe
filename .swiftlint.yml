@@ -6,3 +6,5 @@ disabled_rules: # rule identifiers to exclude from running
 - trailing_whitespace
 - identifier_name
 - vertical_whitespace
+- Type Body Length
+- Line Length

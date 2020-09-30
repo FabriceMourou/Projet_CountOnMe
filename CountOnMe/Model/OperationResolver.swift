@@ -50,7 +50,8 @@ class OperationResolver {
             
             let mathOperatorSymbolString = operationsToReduce[operationUnitIndex + 1]
             
-            guard let mathOperator = mathOperatorConverter.convertSymbolToMathOperator(symbol: mathOperatorSymbolString) else {
+            guard let mathOperator = mathOperatorConverter.convertSymbolToMathOperator(symbol: mathOperatorSymbolString)
+            else {
                 throw CalculatorError.cannotConvertSymbolIntoMathOperator
             }
             
