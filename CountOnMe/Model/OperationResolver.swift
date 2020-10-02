@@ -43,8 +43,7 @@ class OperationResolver {
             
             guard
                 let left = Double(operationsToReduce[operationUnitIndex]),
-                let right = Double(operationsToReduce[operationUnitIndex + 2])
-                else {
+                let right = Double(operationsToReduce[operationUnitIndex + 2]) else {
                     throw CalculatorError.cannotGetLeftAndRightNumberForOperationUnit
             }
             

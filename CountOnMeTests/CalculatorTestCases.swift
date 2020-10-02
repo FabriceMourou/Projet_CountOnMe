@@ -23,7 +23,7 @@ class CalculatorTestCases: XCTestCase {
     
     func testAddDigit_WhenAddSingleDigit_ThenAppendDigit() {
         calculator.addDigit(3)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "3")
+        XCTAssertEqual(calculatorDelegateMock.operation, "3")
     }
     
     
@@ -31,27 +31,27 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(1)
         calculator.addDigit(3)
         calculator.addDigit(7)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "137")
+        XCTAssertEqual(calculatorDelegateMock.operation, "137")
     }
     
     
     func testAddDigit_WhenAddZeroDigit_ThenAppendDigit() {
         calculator.addDigit(0)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "0")
+        XCTAssertEqual(calculatorDelegateMock.operation, "0")
     }
     
     
     func testAddDigit_WhenAddMultipleZeroDigits_ThenOnlyOneZero() {
         calculator.addDigit(0)
         calculator.addDigit(0)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "0")
+        XCTAssertEqual(calculatorDelegateMock.operation, "0")
     }
     
     
     func testAddDigit_WhenAddSinleZeroAfterDigit_ThenAppendDigits() {
         calculator.addDigit(1)
         calculator.addDigit(0)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "10")
+        XCTAssertEqual(calculatorDelegateMock.operation, "10")
     }
     
     
@@ -59,14 +59,14 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(1)
         calculator.addDigit(0)
         calculator.addDigit(0)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "100")
+        XCTAssertEqual(calculatorDelegateMock.operation, "100")
     }
     
     
     func testAddDigit_WhenAddZeroBeforeDigit_ThenAppendDigitWithoutZero() {
         calculator.addDigit(0)
         calculator.addDigit(1)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1")
     }
     
     
@@ -76,7 +76,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(2)
         try! calculator.resolveOperation()
         calculator.addDigit(1)
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1")
     }
     
     
@@ -88,7 +88,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(1)
         try! calculator.addMathOperator(.plus)
         
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + ")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + ")
     }
     
     
@@ -96,7 +96,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(1)
         try! calculator.addMathOperator(.minus)
         
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 - ")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 - ")
     }
     
     
@@ -104,7 +104,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(5)
         try! calculator.addMathOperator(.multiply)
         
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "5 × ")
+        XCTAssertEqual(calculatorDelegateMock.operation, "5 × ")
     }
     
     
@@ -112,7 +112,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(5)
         try! calculator.addMathOperator(.divide)
         
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "5 ÷ ")
+        XCTAssertEqual(calculatorDelegateMock.operation, "5 ÷ ")
     }
     
     
@@ -122,7 +122,7 @@ class CalculatorTestCases: XCTestCase {
         calculator.addDigit(1)
         try! calculator.addMathOperator(.plus)
         
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + 1 + ")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + 1 + ")
     }
     
     
@@ -153,7 +153,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.plus)
         calculator.addDigit(2)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + 2 = 3")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + 2 = 3")
     }
     
     
@@ -162,7 +162,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.minus)
         calculator.addDigit(1)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 - 1 = 1")
+        XCTAssertEqual(calculatorDelegateMock.operation, "2 - 1 = 1")
     }
     
     
@@ -171,7 +171,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(2)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 = 4")
+        XCTAssertEqual(calculatorDelegateMock.operation, "2 × 2 = 4")
     }
     
     
@@ -180,7 +180,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.divide)
         calculator.addDigit(2)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "4 ÷ 2 = 2")
+        XCTAssertEqual(calculatorDelegateMock.operation, "4 ÷ 2 = 2")
     }
     
     
@@ -191,7 +191,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(4)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + 2 × 4 = 9")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + 2 × 4 = 9")
     }
     
     
@@ -202,7 +202,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(4)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 × 2 × 4 = 8")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 × 2 × 4 = 8")
     }
     
     
@@ -215,7 +215,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(16)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 4 × 16 = 256")
+        XCTAssertEqual(calculatorDelegateMock.operation, "2 × 2 × 4 × 16 = 256")
     }
     
     
@@ -228,7 +228,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.divide)
         calculator.addDigit(16)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 4 ÷ 16 = 1")
+        XCTAssertEqual(calculatorDelegateMock.operation, "2 × 2 × 4 ÷ 16 = 1")
     }
     
     
@@ -243,7 +243,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(4)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + 2 × 4 + 2 × 4 = 17")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + 2 × 4 + 2 × 4 = 17")
     }
     
     
@@ -260,7 +260,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.plus)
         calculator.addDigit(2)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "1 + 2 × 4 + 2 × 4 + 2 = 19")
+        XCTAssertEqual(calculatorDelegateMock.operation, "1 + 2 × 4 + 2 × 4 + 2 = 19")
     }
     
     
@@ -273,7 +273,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.divide)
         calculator.addDigit(3)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "2 × 2 × 2 ÷ 3 = 2.66667")
+        XCTAssertEqual(calculatorDelegateMock.operation, "2 × 2 × 2 ÷ 3 = 2.66667")
     }
     
     
@@ -341,7 +341,7 @@ class CalculatorTestCases: XCTestCase {
         try! calculator.addMathOperator(.multiply)
         calculator.addDigit(100000000)
         try! calculator.resolveOperation()
-        XCTAssertEqual(calculatorDelegateMock.textToCompute, "100000000 × 100000000 = 1e+16")
+        XCTAssertEqual(calculatorDelegateMock.operation, "100000000 × 100000000 = 1e+16")
     }
     
     

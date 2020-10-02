@@ -1,7 +1,7 @@
 import Foundation
 
 protocol CalculatorDelegate: class {
-    func didUpdateOperationString(textToCompute: String)
+    func didUpdateOperationString(operation: String)
 }
 
 
@@ -51,6 +51,6 @@ class Calculator {
 
 extension Calculator: OperationMakerDelegate {
     func didUpdateOperationString(textToCompute: String) {
-        delegate?.didUpdateOperationString(textToCompute: textToCompute)
+        delegate?.didUpdateOperationString(operation: textToCompute)
     }
 }

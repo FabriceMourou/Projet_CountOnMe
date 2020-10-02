@@ -1,9 +1,9 @@
 @testable import CountOnMe
 
 class CalculatorDelegateMock: CalculatorDelegate {
-    var textToCompute = ""
+    var operation = ""
 
-    func didUpdateOperationString(textToCompute: String) {
-        self.textToCompute = textToCompute
+    func didUpdateOperationString(operation: String) {
+        self.operation = operation
     }
 }

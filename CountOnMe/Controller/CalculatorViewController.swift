@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  SimpleCalc
-//
-//  Created by Vincent Saluzzo on 29/03/2019.
-//  Copyright © 2019 Vincent Saluzzo. All rights reserved.
-//
-
 import UIKit
 
 class CalculatorViewController: UIViewController {
@@ -73,8 +65,8 @@ class CalculatorViewController: UIViewController {
 }
 
 extension CalculatorViewController: CalculatorDelegate {
-    func didUpdateOperationString(textToCompute: String) {
-        operationTextView.text = textToCompute
+    func didUpdateOperationString(operation: String) {
+        operationTextView.text = operation
     }
 
 }
