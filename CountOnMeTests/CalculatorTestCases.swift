@@ -1,7 +1,7 @@
 import XCTest
 @testable import CountOnMe
 
-//swiftlint:disable line_length
+//swiftlint:disable line_length force_try force_cast
 
 class CalculatorTestCases: XCTestCase {
     
